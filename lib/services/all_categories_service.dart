@@ -1,17 +1,13 @@
 import 'dart:convert';
 
+import 'package:e_comerce/helper/api.dart';
 import 'package:http/http.dart' as http;
 
 class AllCategoriesService {
   Future<List<dynamic>> getAllCategories() async {
-    http.Response response = await http.get(
-      Uri.parse('https://fakestoreapi.com/products'),
+    List<dynamic> response = await Api().get(
+      url: 'https://fakestoreapi.com/products/categories',
     );
-    if (response.statusCode == 200) {
-      List<dynamic> categories = jsonDecode(response.body);
-      return categories;
-    } else {
-      throw Exception('Failed to load categories ${response.statusCode}');
-    }
+    return response;
   }
 }
