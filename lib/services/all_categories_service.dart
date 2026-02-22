@@ -7,7 +7,11 @@ class AllCategoriesService {
     http.Response response = await http.get(
       Uri.parse('https://fakestoreapi.com/products'),
     );
-    List<dynamic> categories = jsonDecode(response.body);
-    return categories;
+    if (response.statusCode == 200) {
+      List<dynamic> categories = jsonDecode(response.body);
+      return categories;
+    } else {
+      throw Exception('Failed to load categories ${response.statusCode}');
+    }
   }
 }

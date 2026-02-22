@@ -10,11 +10,15 @@ class CategoriesService {
     http.Response response = await http.get(
       Uri.parse('https://fakestoreapi.com/products/category/$categoryName'),
     );
-    List<dynamic> jsonList = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body);
 
-    List<ProudctModel> proudctList = jsonList
-        .map((proudct) => ProudctModel.fromjson(proudct))
-        .toList();
-    return proudctList;
+      List<ProudctModel> proudctList = jsonList
+          .map((proudct) => ProudctModel.fromjson(proudct))
+          .toList();
+      return proudctList;
+    }else {
+      throw Exception('Failed to load products by category ${response.statusCode}');
+    }
   }
 }
